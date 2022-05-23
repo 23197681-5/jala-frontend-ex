@@ -13,40 +13,46 @@ type MyProps = {
   };
 
 class Products  extends Component  {
+    constructor(props: any){
+        super(props);
+        this.state = {
+            products: [],
+            loading: true
+        };
+    }
     /* @ts-ignore */
     // const [products, setProducts] = useState(null)
 
     // const [initialState, setInitialState] = useState(null)
     // const [isLoading, setLoading: any] = useState(false)
    
-    // useEffect(() => {
+    async componentDidMount() {
     //   setLoading(true);
-    //   const response = await fetch("http://localhost:5289/api/Products");
-    //   const data = await response.json();
-    //       setProducts(data);
-    //       setInitialState(data);
-    //       setLoading(false);
-    // }, []);
-  
+      const response = await fetch("http://localhost:5289/api/Products");
+      const data = await response.json();
+      this.setState({products: data, loading: false});
+    }
+//   
     // if (isLoading) return <p>Looking for products...</p>
     // if (!products) return <p>No products around here</p>
       
       render(): React.ReactNode {
+        var state: any = this.state;
         return (
           <div className="App">
             <header className="App-header">
               
             </header>
             <ul className="flex-container">
-        {/* {products?.map((product) => { */}
-          {/* // Return the element. Also pass key
+        {state.products.map((product: any) => { 
+           // Return the element. Also pass key
           return (
             <li key={product.id} className="flex-item">
               {product.name} {" R$" + product.price}
               <br />
             </li>
           );
-        })} */}
+        })}
       </ul>
           </div>);
       }
