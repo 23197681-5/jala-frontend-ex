@@ -35,9 +35,20 @@ class Products  extends Component  {
 //   
     // if (isLoading) return <p>Looking for products...</p>
     // if (!products) return <p>No products around here</p>
-      
+    changeFirstLine(state: any ) {
+        var here = this;
+        setTimeout(function () {
+            var products = state.products;
+            var novo = products.shift();
+            products.push(novo)
+            here.setState({
+                products: products})
+        }, 1000);
+    }
       render(): React.ReactNode {
         var state: any = this.state;
+
+        this.changeFirstLine(state);
         return (
           <div className="App">
             <header className="App-header">
@@ -47,8 +58,8 @@ class Products  extends Component  {
         {state.products.map((product: any) => { 
            // Return the element. Also pass key
           return (
-            <li key={product.id} className="flex-item">
-              {product.name} {" R$" + product.price}
+            <li key={product?.id} className="flex-item">
+              {product?.name} {" R$" + product?.price}
               <br />
             </li>
           );
